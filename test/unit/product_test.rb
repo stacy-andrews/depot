@@ -15,17 +15,17 @@ class ProductTest < ActiveSupport::TestCase
 
   test "product price must be positive" do
     product = Product.new(title:       "My Book Title", 
-                          description: "yyy", 
-                          image_url:   "zzz.jpg")
+      description: "yyy", 
+      image_url:   "zzz.jpg")
 
     product.price = -1
     assert product.invalid?
-    assert_equal "must be greater than or equal to 0.01", product.all_price_errors
+    assert_equal "must be greater than or equal to 0.01", all_errors(product, :price)
 
     product.price = 0
     assert product.invalid?
 
-    assert_equal "must be greater than or equal to 0.01", product.errors[:price].join('; ')
+    assert_equal "must be greater than or equal to 0.01", all_errors(product, :price)
     product.price = 1
     assert product.valid?
   end
@@ -43,6 +43,20 @@ class ProductTest < ActiveSupport::TestCase
     end
   end
 
+  test "product is not valid without a unique title" do 
+    product = new_product title: products(:ruby).title
+
+    assert !product.save
+    assert_equal "has already been taken", all_errors(product, :title) 
+  end
+
+  test "product is not valid without a unique title - i18n" do 
+    product = new_product title: products(:ruby).title
+
+    assert !product.save
+    assert_equal I18n.translate('activerecord.errors.messages.taken'), all_errors(product, :title)
+  end
+
   def new_product(overrides)
     defaults = {
       title:       'Howdy',
@@ -54,6 +68,10 @@ class ProductTest < ActiveSupport::TestCase
     defaults.merge! overrides
 
     Product.new(defaults)
+  end
+
+  def all_errors(product, attr) 
+    product.errors[attr].join('; ')
   end
 end
 
