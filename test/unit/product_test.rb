@@ -14,9 +14,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "product price must be positive" do
-    product = Product.new(title:       "My Book Title", 
-      description: "yyy", 
-      image_url:   "zzz.jpg")
+    product = new_product
 
     product.price = -1
     assert product.invalid?
@@ -24,8 +22,8 @@ class ProductTest < ActiveSupport::TestCase
 
     product.price = 0
     assert product.invalid?
-
     assert_equal "must be greater than or equal to 0.01", all_errors(product, :price)
+
     product.price = 1
     assert product.valid?
   end
@@ -57,15 +55,24 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal I18n.translate('activerecord.errors.messages.taken'), all_errors(product, :title)
   end
 
-  def new_product(overrides)
+  test "title must be at least 10 characters long" do
+    product = new_product(title: 'short')
+    assert product.invalid?
+    assert_equal 'is too short (minimum is 10 characters)', all_errors(product, :title)
+
+    product.title = 'this is long enough'
+    assert product.valid?
+  end
+
+  def new_product(overrides = nil)
     defaults = {
-      title:       'Howdy',
+      title:       '0123456789',
       description: 'Howdy howdy',
       price:       1,
       image_url:   'a.gif'
     }
 
-    defaults.merge! overrides
+    defaults.merge! overrides if overrides != nil
 
     Product.new(defaults)
   end
