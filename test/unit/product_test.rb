@@ -64,6 +64,10 @@ class ProductTest < ActiveSupport::TestCase
     assert product.valid?
   end
 
+  test "product fixture has line items" do
+    assert products(:with_line_items).line_items.any?
+  end
+
   def new_product(overrides = nil)
     defaults = {
       title:       '0123456789',

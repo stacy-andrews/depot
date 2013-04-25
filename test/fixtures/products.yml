@@ -20,3 +20,8 @@ ruby:
     delivered fast, you should add Ruby to your toolbox.
   price:       49.50 
   image_url:   ruby.png
+
+with_line_items:
+  title: Line Items
+  description: Line Items
+  price:  1.0
