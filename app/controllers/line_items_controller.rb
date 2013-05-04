@@ -44,7 +44,9 @@ class LineItemsController < ApplicationController
 
     @cart = current_cart
 
-    @line_item = @cart.line_items.build(product: product)
+    @line_item = @cart.add_product(product.id)
+
+    # @line_item = @cart.line_items.build(product: product)
 
     respond_to do |format|
       if @line_item.save

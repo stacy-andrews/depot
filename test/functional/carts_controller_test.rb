@@ -25,8 +25,30 @@ class CartsControllerTest < ActionController::TestCase
   end
 
   test "should show cart" do
-    get :show, id: @cart
+    show 
     assert_response :success
+  end
+
+  test "fixture - cart with items" do
+    cart = carts(:with_products)
+
+    assert cart.line_items.any?
+  end
+
+  test "should show all line items in cart" do
+    cart = carts(:with_products)
+    show cart
+
+    assert_response :success
+    assert_select '.cart_item', cart.line_items.count
+  end
+
+  def show(cart = nil)
+    if (cart == nil)
+      cart = @cart
+    end
+
+    get :show, id: cart
   end
 
   test "should get edit" do

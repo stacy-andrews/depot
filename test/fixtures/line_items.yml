@@ -2,16 +2,35 @@
 
 one:
   product_id: 1
+  quantity: 1
   cart_id: 1
 
 two:
   product_id: 1
+  quantity: 1
   cart_id: 1
 
 with_product:
   cart_id: 1
+  quantity: 1
   product: with_line_items
 
 with_product_two:
   cart_id: 2
+  quantity: 1
   product: with_line_items
+
+with_cart_one:
+  product: with_line_items
+  quantity: 1
+  cart: with_products
+
+with_cart_two:
+  product: with_line_items
+  quantity : 1
+  cart: with_products
+
+multiple_line_items:
+  product: with_line_items
+  quantity: 4
+  cart: multiple_line_items

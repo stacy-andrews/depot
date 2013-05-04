@@ -16,7 +16,7 @@ class LineItemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create line_item" do
+  test "should create line_item with a single quantity" do
     assert_difference('LineItem.count') do
       post :create, product_id: products(:ruby).id
     end

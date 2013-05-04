@@ -19,3 +19,7 @@ group :tools do
   gem 'autotest-standalone'
   gem 'autotest-rails-pure'
 end
+
+group :development do
+  gem 'mongrel'
+end
