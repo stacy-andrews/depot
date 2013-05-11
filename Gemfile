@@ -14,6 +14,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 group :tools do
   gem 'autotest-standalone'
@@ -22,4 +23,6 @@ end
 
 group :development do
   gem 'mongrel'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
